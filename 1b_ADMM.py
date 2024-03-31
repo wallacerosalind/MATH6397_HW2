@@ -38,13 +38,24 @@ def getsk1(zk1, zk)#dual residual
 u_0 = 0
 z_0 = 0
 x = getxk1(z_0, u_0) #x_1
-z = getzk1(x,u_0) #z_1
-u = getuk1(u_0, x, z) #u_1
-r = getrk1(x, z) #r_1
-s = getsk1(z, z_0) #s_1
-eps_pri = geteps_pri(x, z) #eps_pri_1
-eps_dual = geteps_dual(u) #eps_dual_1
+zk = getzk1(x,u_0) #z_1
+uk = getuk1(u_0, x, z) #u_1
+r = getrk1(x, zk) #r_1
+s = getsk1(zk, z_0) #s_1
+eps_pri = geteps_pri(x, zk) #eps_pri_1
+eps_dual = geteps_dual(uk) #eps_dual_1
 while (r > eps_pri) and (s > eps_dual)
+    xk1 = getxk1(zk,uk) #x_2 is first assignment
+    zk1 = getzk1(xk1,uk)
+    uk1 = getuk1(uk,xk1,zk1)
+    r = getrk1(xk1, zk1)
+    s = getsk1(zk1, zk)
+    zk = zk1 #iterate
+    uk = uk1 #iterate
+
+f'Terminal ||r||^2_2 = {r}.'
+f'Terminal ||s||^2_2 = {s}.'
+
 
 
 # eps_pri = np.sqrt(n) * eps_abs + eps_rel * np.max(np.sqrt(mp.inner(xk,xk)), np.sqrt(mp.inner(-zk,-zk)))
