@@ -48,10 +48,7 @@ r = getrk1(x, zk) #r_1
 s = getsk1(zk, z_0) #s_1
 eps_pri = geteps_pri(x, zk) #eps_pri_1
 eps_dual = geteps_dual(uk) #eps_dual_1
-print('r=')
-print(r.shape)
-print('eps_pri=')
-print(eps_pri.shape)
+
 while (r > eps_pri) and (s > eps_dual):
     xk1 = getxk1(zk,uk) #x_2 is first assignment
     zk1 = getzk1(xk1,uk)
