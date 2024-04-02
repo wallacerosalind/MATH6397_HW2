@@ -49,7 +49,9 @@ s = getsk1(zk, z_0) #s_1
 eps_pri = geteps_pri(x, zk) #eps_pri_1
 eps_dual = geteps_dual(uk) #eps_dual_1
 
+iter = 0 #debug: count how many iterations of while loop
 while (r > eps_pri) and (s > eps_dual):
+    iter += 1
     xk1 = getxk1(zk,uk) #x_2 is first assignment
     zk1 = getzk1(xk1,uk)
     uk1 = getuk1(uk,xk1,zk1)
@@ -59,11 +61,15 @@ while (r > eps_pri) and (s > eps_dual):
     eps_dual = geteps_dual(uk1) #update
     zk = zk1 #iterate
     uk = uk1 #iterate
-    print('iteration')
+    print('Count of while loop iterations:')
+    print(iter)
 
-f'Terminal ||r||^2_2 = {r}.'
-f'Terminal ||s||^2_2 = {s}.'
-f'x = {xk1}.'
+print('Terminal ||r||^2_2 = ')
+print(r)
+print('Terminal ||s||^2_2 = ')
+print(s)
+print('x =')
+print(x)
 
 
 
