@@ -62,15 +62,16 @@ while (r > eps_pri) and (s > eps_dual):
     eps_dual = geteps_dual(uk1) #update
     zk = zk1 #iterate
     uk = uk1 #iterate
-    print('Count of while loop iterations:')
-    print(iter)
+
+print('Count of while loop iterations:')
+print(iter)
 
 print('Terminal ||r||^2_2 = ')
 print(r)
 print('Terminal ||s||^2_2 = ')
 print(s)
-print('x =')
-print(x)
+#print('x =')
+#print(x)
 
 
 

@@ -36,6 +36,8 @@ class Data:
 
         m = 1500  # number of examples
         n = 5000  # number of features
+        #m = 150  # rwf debug
+        #n = 500  # rwf debug
         p = 100.0/float(n) # sparsity density
 
         # generate random, sparse vector
