@@ -63,6 +63,7 @@ while (r > eps_pri) and (s > eps_dual):
     zk = zk1 #iterate
     uk = uk1 #iterate
 
+
 print('Count of while loop iterations:')
 print(iter)
 print('Terminal ||r||^2_2 = ')
