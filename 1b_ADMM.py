@@ -65,7 +65,6 @@ while (r > eps_pri) and (s > eps_dual):
 
 print('Count of while loop iterations:')
 print(iter)
-
 print('Terminal ||r||^2_2 = ')
 print(r)
 print('Terminal ||s||^2_2 = ')
