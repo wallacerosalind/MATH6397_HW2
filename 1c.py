@@ -1,14 +1,20 @@
-#HW2 1b
-import numpy as np
+#HW2 1c
 from Data import *
 from scipy.sparse import identity
+import scipy
 
 dat = Data()
 xtrue, y, A = dat.get_sparse_reg_dat() #A:mxn = 1500x5000
+m = A.shape[0] #m = 1500
+n = A.shape[1] #n = 5000
 rho = 1 #given
 eps_abs = .0001 #given
 eps_rel = .01 #given
 alpha = np.max(np.matmul(A.transpose(),y))/10 #given; L-inf norm
+M = identity(m).toarray() + rho * np.matmul(A,A.transpose())
+L= scipy.linalg.cholesky(M,lower=True)
+U= scipy.linalg.cholesky(M,lower=False)
+W = identity(n).toarray() - rho * np.matmul(np.matmul(A.transpose(),np.linalg.inv(M)),A)
 
 def getfx(A,x,y):
     res = np.matmul(A, x) - y
@@ -18,13 +24,10 @@ def getgz(z):
 def getlag(A,x,y,z,u):
     return getfx(A,x,y) + getgz(z) + (rho/2) * np.inner((x-z+u).transpose(), (x-z+u).transpose())
 
-m = A.shape[0] #m = 1500
-n = A.shape[1] #n = 5000
-
 #ADMM algorithm 1
 #terminate when primal residual rk <= eps_pri AND dual residual sk <= eps_dual
-def getxk1(zk, uk):
-    return np.matmul(np.linalg.inv(np.matmul(A.transpose(),A) + rho * identity(n).toarray()), np.matmul(A.transpose(),y) + rho * (zk - uk))
+def getxk1(zk, uk): #CHOLESKY
+    return np.matmul(W, np.matmul(A.transpose(),y) + rho * (zk - uk))
 def getzk1(xk1, uk):
     return np.sign(xk1+uk) * np.maximum(np.abs(xk1+uk) - alpha/rho, 0)
 def getuk1(uk, xk1, zk1):
@@ -70,11 +73,3 @@ print('Terminal ||r||^2_2 = ')
 print(r)
 print('Terminal ||s||^2_2 = ')
 print(s)
-
-
-
-# eps_pri = np.sqrt(n) * eps_abs + eps_rel * np.max(np.sqrt(mp.inner(xk,xk)), np.sqrt(mp.inner(-zk,-zk)))
-# eps_dual = np.sqrt(n) * eps_abs + eps_rel * np.sqrt(mp.inner(rho*uk, rho*uk))
-#xk1 = np.matmul(np.linalg.inv(np.matmul(A.transpose(),A) + rho * np.identity(n)), np.matmul(A.transpose().y) + rho * (zk - uk))
-#zk1 = np.sign(xk1+uk) * np.maximum(np.abs(xk1+uk) - alpha/rho, 0)
-#uk1 = uk + xk1 -zk1
