@@ -24,7 +24,7 @@ def getgz(z):
 def getlag(A,x,y,z,u):
     return getfx(A,x,y) + getgz(z) + (rho/2) * np.inner((x-z+u).transpose(), (x-z+u).transpose())
 
-#ADMM algorithm 1
+#ADMM
 #terminate when primal residual rk <= eps_pri AND dual residual sk <= eps_dual
 def getxk1(zk, uk): #CHOLESKY
     return np.matmul(W, np.matmul(A.transpose(),y) + rho * (zk - uk))
@@ -43,8 +43,8 @@ def getsk1(zk1, zk):#dual residual
     return np.inner((-rho*(zk1 - zk)).transpose(),(-rho*(zk1 - zk)).transpose())
 
 #Initial values:
-u_0 = 0
-z_0 = 0
+u_0 = np.zeros(n)
+z_0 = np.zeros(n)
 x = getxk1(z_0, u_0) #x_1
 zk = getzk1(x,u_0) #z_1
 uk = getuk1(u_0, x, zk) #u_1

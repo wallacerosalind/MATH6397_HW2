@@ -1,26 +1,27 @@
 import numpy as np
+from scipy.sparse import identity
+from Data import *
+import scipy
+dat = Data()
+xtrue, y, N = dat.get_sparse_reg_dat() #not using N; use A instead (defined below)
 alpha=5
 rho=1
 eps_abs = .0001
 eps_rel = .01
-x_init = np.zeros(n)
-u_init = np.zeros(n)
-z_init = np.zeros(n)
+n=5000
+m=1500
 e = np.ones(n)
-F = sp.sparse.spdiags([e,-e],[0,1],n,n)
+F = scipy.sparse.spdiags([e,-e],[0,1],n,n).toarray()
 FT = F.transpose()
 A = identity(n).toarray()
-m = A.shape[0] #m = 1500
-n = A.shape[1] #n = 5000
-
-#ADMM algorithm 1
+#ADMM
 #terminate when primal residual rk <= eps_pri AND dual residual sk <= eps_dual
-def getxk1(zk, uk):
-    return np.matmul(np.linalg.inv(A + rho * np.matmul(FT,F)), b + rho * np.matmul(FT, zk - uk))
-def getzk1(xk1, uk):
-    return np.sign(xk1+uk) * np.maximum(np.abs(xk1+uk) - alpha/rho, 0)
+def getxk1(zk, uk):  #2c
+    return np.matmul(np.linalg.inv(A + rho * np.matmul(FT,F)), y + rho * np.matmul(FT, zk - uk))
+def getzk1(xk1, uk):  #2c
+    return np.sign(np.matmul(F,xk1+uk)) * np.maximum(np.abs(np.matmul(F,xk1+uk)) - alpha/rho, 0)
 def getuk1(uk, xk1, zk1):
-    return uk + xk1 -zk1
+    return uk + np.matmul(F, xk1) - zk1
 def geteps_pri(xk, zk):
     return (np.sqrt(n) * eps_abs + eps_rel * np.maximum(np.sqrt(np.inner((xk).transpose(),(xk).transpose())), np.sqrt(np.inner((-zk).transpose(),(-zk).transpose()))))
 def geteps_dual(uk):
@@ -32,8 +33,9 @@ def getsk1(zk1, zk):#dual residual
     return np.inner((-rho*(zk1 - zk)).transpose(),(-rho*(zk1 - zk)).transpose())
 
 #Initial values:
-u_0 = 0
-z_0 = 0
+x_0 = np.zeros(n)
+u_0 = np.zeros(n)
+z_0 = np.zeros(n)
 x = getxk1(z_0, u_0) #x_1
 zk = getzk1(x,u_0) #z_1
 uk = getuk1(u_0, x, zk) #u_1

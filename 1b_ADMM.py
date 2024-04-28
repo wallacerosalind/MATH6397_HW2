@@ -40,8 +40,8 @@ def getsk1(zk1, zk):#dual residual
     return np.inner((-rho*(zk1 - zk)).transpose(),(-rho*(zk1 - zk)).transpose())
 
 #Initial values:
-u_0 = 0
-z_0 = 0
+u_0 = np.zeros(n)
+z_0 = np.zeros(n)
 x = getxk1(z_0, u_0) #x_1
 zk = getzk1(x,u_0) #z_1
 uk = getuk1(u_0, x, zk) #u_1
