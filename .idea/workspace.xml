@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4769f30-c29c-49c5-b9c6-f4dadf3d7826" name="Changes" comment="HW2">
-      <change afterPath="$PROJECT_DIR$/hw02_version_04-10-2024_updated.pdf" afterDir="false" />
+    <list default="true" id="c4769f30-c29c-49c5-b9c6-f4dadf3d7826" name="Changes" comment="corrected scalar to vector; memory crash">
+      <change afterPath="$PROJECT_DIR$/1c_NEW.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HW2_1a_pencilpaper.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1b_ADMM.py" beforeDir="false" afterPath="$PROJECT_DIR$/1b_ADMM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1c.py" beforeDir="false" afterPath="$PROJECT_DIR$/1c.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2b.py" beforeDir="false" afterPath="$PROJECT_DIR$/2b.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HW2_1a_deriveAlg1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hw02.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.1b_ADMM.executor": "Run",
     "Python.1c.executor": "Run",
+    "Python.1c_NEW.executor": "Run",
     "Python.2b.executor": "Run",
     "Python.Data.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -226,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714332697546</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="corrected scalar to vector; memory crash">
+      <option name="closed" value="true" />
+      <created>1714335299655</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1714335299655</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -245,6 +258,7 @@
     <MESSAGE value="fixed iteration count printing" />
     <MESSAGE value="Final version" />
     <MESSAGE value="HW2" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW2" />
+    <MESSAGE value="corrected scalar to vector; memory crash" />
+    <option name="LAST_COMMIT_MESSAGE" value="corrected scalar to vector; memory crash" />
   </component>
 </project>

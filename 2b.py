@@ -3,17 +3,20 @@ from scipy.sparse import identity
 from Data import *
 import scipy
 dat = Data()
-xtrue, y, N = dat.get_sparse_reg_dat() #not using N; use A instead (defined below)
+xtrue, y = dat.get_denoise_data1D()
+print(y.shape)
 alpha=5
 rho=1
 eps_abs = .0001
 eps_rel = .01
-n=5000
+n=100
 m=1500
 e = np.ones(n)
 F = scipy.sparse.spdiags([e,-e],[0,1],n,n).toarray()
 FT = F.transpose()
 A = identity(n).toarray()
+#print(np.linalg.inv(A + rho * np.matmul(FT,F)).shape)
+
 #ADMM
 #terminate when primal residual rk <= eps_pri AND dual residual sk <= eps_dual
 def getxk1(zk, uk):  #2c
@@ -45,7 +48,7 @@ eps_pri = geteps_pri(x, zk) #eps_pri_1
 eps_dual = geteps_dual(uk) #eps_dual_1
 
 iter = 0 #debug: count how many iterations of while loop
-while (r > eps_pri) and (s > eps_dual):
+while (np.inner(r.transpose(),r.transpose()) > eps_pri) and (np.inner(s.transpose(),s.transpose()) > eps_dual):
     iter += 1
     xk1 = getxk1(zk,uk) #x_2 is first assignment
     zk1 = getzk1(xk1,uk)

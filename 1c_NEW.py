@@ -1,35 +1,28 @@
-#HW2 1b
-import numpy as np
+#HW2 1c
 from Data import *
 from scipy.sparse import identity
+import scipy
 
 dat = Data()
 xtrue, y, A = dat.get_sparse_reg_dat() #A:mxn = 1500x5000
+m = A.shape[0] #m = 1500
+n = A.shape[1] #n = 5000
 rho = 1 #given
 eps_abs = .0001 #given
 eps_rel = .01 #given
 alpha = np.max(np.matmul(A.transpose(),y))/10 #given; L-inf norm
+M = identity(m).toarray() + rho * np.matmul(A,A.transpose())
+L= scipy.linalg.cholesky(M,lower=True)
+U= scipy.linalg.cholesky(M,lower=False)
+W = identity(n).toarray() - rho * np.matmul(np.matmul(A.transpose(),np.linalg.inv(M)),A)
 
-def getfx(A,x,y):
-    res = np.matmul(A, x) - y
-    return 0.5*np.inner(res,res)
-def getgz(z):
-    return alpha * np.linalg.norm(z, ord=1)
-def getlag(A,x,y,z,u):
-    return getfx(A,x,y) + getgz(z) + (rho/2) * np.inner((x-z+u), (x-z+u))
-
-m = A.shape[0] #m = 1500
-n = A.shape[1] #n = 5000, 100
-
-#ADMM algorithm 1
+#ADMM
 #terminate when primal residual rk <= eps_pri AND dual residual sk <= eps_dual
-def getxk1(zk, uk):
-    uk = uk.reshape(n,1,order='F')
-    zk = zk.reshape(n,1,order='F')
-    #S2 = (np.matmul(A.transpose(), y) + (zk - uk).reshape(n, 1, order='F')) #secodn param in return matmul
-    S2 = (np.matmul(A.transpose(), y) + (zk - uk))  # secodn param in return matmul
-    S1 = (np.linalg.inv(np.matmul(A.transpose(),A) + identity(n).toarray()))
-    return np.matmul(S1, S2)
+def getxk1(zk, uk): #CHOLESKY
+    uk = uk.reshape(n, 1, order='F')
+    zk = zk.reshape(n, 1, order='F')
+    return np.matmul(W, np.matmul(A.transpose(),y) + rho * (zk - uk))
+
 def getzk1(xk1, uk):
     xk1 = xk1.reshape(n,1,order='F')
     uk = uk.reshape(n,1,order='F')

@@ -52,9 +52,7 @@ r = getrk1(x, zk) #r_1
 s = getsk1(zk, z_0) #s_1
 eps_pri = geteps_pri(x, zk) #eps_pri_1
 eps_dual = geteps_dual(uk) #eps_dual_1
-
-iter = 0 #debug: count how many iterations of while loop
-while (r > eps_pri) and (s > eps_dual):
+while (np.inner(r.transpose(),r.transpose()) > eps_pri) and (np.inner(s.transpose(),s.transpose()) > eps_dual):
     iter += 1
     xk1 = getxk1(zk,uk) #x_2 is first assignment
     zk1 = getzk1(xk1,uk)
@@ -65,6 +63,8 @@ while (r > eps_pri) and (s > eps_dual):
     eps_dual = geteps_dual(uk1) #update
     zk = zk1 #iterate
     uk = uk1 #iterate
+
+iter = 0 #debug: count how many iterations of while loop
 
 
 print('Count of while loop iterations:')

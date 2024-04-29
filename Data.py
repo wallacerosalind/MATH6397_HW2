@@ -1,5 +1,7 @@
 import numpy as np
 import scipy as sp
+import random as rnd
+import math
 import os
 from scipy.linalg import qr
 from scipy.sparse import csr_matrix
@@ -31,11 +33,28 @@ class Data:
         return A
 
 
+    def get_denoise_data1D( self ):
+
+        n = 100
+        # generate random data
+        xtrue = np.ones( n )
+        for i in range(3):
+            # draw random sample from
+            j2 = rnd.sample( range(0,n), 1 )[0]
+            j1 = math.ceil(j2/2)
+
+            k = rnd.sample( range(0,10), 1 )[0]
+
+            xtrue[ j1 : j2 ] = (k+1)*xtrue[ j1 : j2 ]
+
+        y = xtrue + np.random.randn( n )
+        return xtrue, y
 
     def get_sparse_reg_dat( self ):
 
         m = 1500  # number of examples
-        n = 5000  # number of features
+        #n = 5000  # number of features
+        n = 200  # number of features
         #m = 150  # rwf debug memory
         #n = 500  # rwf debug
         p = 100.0/float(n) # sparsity density
